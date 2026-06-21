@@ -1,0 +1,1156 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GznAgri & Data Consulting – Sebze Islahı & Tohumculuk Ar-Ge</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet" />
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        forest:  '#1B4332',
+                        fern:    '#2D6A4F',
+                        sage:    '#40916C',
+                        mint:    '#74C69D',
+                        mist:    '#D8F3DC',
+                        cream:   '#F8F4EC',
+                        parchment: '#EDE8DC',
+                        gold:    '#C9A84C',
+                        'gold-light': '#E8C97A',
+                    },
+                    fontFamily: {
+                        sans:    ['Inter', 'sans-serif'],
+                        display: ['Playfair Display', 'serif'],
+                    },
+                    keyframes: {
+                        fadeUp:  { '0%': { opacity:'0', transform:'translateY(28px)' }, '100%': { opacity:'1', transform:'translateY(0)' } },
+                        fadeIn:  { '0%': { opacity:'0' },  '100%': { opacity:'1' } },
+                        pulse2:  { '0%,100%': { transform:'scale(1)' }, '50%': { transform:'scale(1.04)' } },
+                        float:   { '0%,100%': { transform:'translateY(0)' }, '50%': { transform:'translateY(-8px)' } },
+                        leafSpin:{ '0%': { transform:'rotate(0deg)' }, '100%': { transform:'rotate(360deg)' } },
+                    },
+                    animation: {
+                        'fade-up':  'fadeUp 0.8s ease forwards',
+                        'fade-in':  'fadeIn 1s ease forwards',
+                        'pulse2':   'pulse2 3s ease-in-out infinite',
+                        'float':    'float 4s ease-in-out infinite',
+                        'leaf':     'leafSpin 20s linear infinite',
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        html { scroll-behavior: smooth; }
+
+        body { font-family: 'Inter', sans-serif; background:#F8F4EC; color:#1B4332; }
+
+        /* ── nav highlight ── */
+        .nav-link {
+            position: relative;
+            transition: color .25s;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -3px; left: 0;
+            width: 0; height: 2px;
+            background: #C9A84C;
+            transition: width .3s ease;
+        }
+        .nav-link:hover::after, .nav-link.active::after { width: 100%; }
+
+        /* ── hero gradient ── */
+        .hero-bg {
+            background: linear-gradient(135deg, #1B4332 0%, #2D6A4F 45%, #40916C 100%);
+        }
+
+        /* ── section reveal on scroll ── */
+        .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        /* ── card hover ── */
+        .card-hover {
+            transition: transform .3s ease, box-shadow .3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 40px rgba(27,67,50,.18);
+        }
+
+        /* ── form input focus ── */
+        .form-input:focus {
+            outline: none;
+            border-color: #40916C;
+            box-shadow: 0 0 0 3px rgba(64,145,108,.18);
+        }
+
+        /* ── glass card ── */
+        .glass {
+            background: rgba(255,255,255,.08);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,.15);
+        }
+
+        /* ── scrollbar ── */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #F8F4EC; }
+        ::-webkit-scrollbar-thumb { background: #40916C; border-radius: 4px; }
+
+        /* ── leaf bg decoration ── */
+        .leaf-deco {
+            position: absolute;
+            opacity: .06;
+            pointer-events: none;
+        }
+
+        /* ── gradient text ── */
+        .grad-text {
+            background: linear-gradient(90deg, #74C69D, #C9A84C);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* ── mobile menu ── */
+        #mobile-menu { max-height: 0; overflow: hidden; transition: max-height .4s ease; }
+        #mobile-menu.open { max-height: 500px; }
+    </style>
+</head>
+<body class="antialiased">
+
+<!-- ════════════════════════════════════════
+     NAVIGATION
+════════════════════════════════════════ -->
+<nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
+     style="background: rgba(27,67,50,0.92); backdrop-filter: blur(12px);">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-18 py-3">
+
+            <!-- Logo -->
+            <a href="#home" class="flex items-center gap-3 group">
+                <!-- SVG Logo -->
+                <div class="relative w-11 h-11 flex-shrink-0">
+                    <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full">
+                        <circle cx="22" cy="22" r="21" fill="#2D6A4F" stroke="#C9A84C" stroke-width="1.5"/>
+                        <!-- Leaf / sprout shape -->
+                        <path d="M22 34 C22 34 22 18 22 14 C22 10 18 7 14 8 C14 8 14 18 22 22" fill="#74C69D" opacity=".9"/>
+                        <path d="M22 34 C22 34 22 18 22 14 C22 10 26 7 30 8 C30 8 30 18 22 22" fill="#B7E4C7" opacity=".8"/>
+                        <line x1="22" y1="14" x2="22" y2="35" stroke="#1B4332" stroke-width="1.2" stroke-linecap="round"/>
+                        <!-- G letter hint -->
+                        <text x="14" y="41" font-family="Inter" font-weight="700" font-size="7" fill="#C9A84C" letter-spacing=".5">G</text>
+                        <text x="19" y="41" font-family="Inter" font-weight="300" font-size="5.5" fill="#74C69D" letter-spacing=".3">Agri</text>
+                    </svg>
+                </div>
+                <div class="leading-tight">
+                    <span class="block text-white font-bold text-base tracking-tight group-hover:text-gold transition-colors">GznAgri</span>
+                    <span class="block text-mint text-[10px] font-medium tracking-widest uppercase">& Data Consulting</span>
+                </div>
+            </a>
+
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex items-center gap-7">
+                <a href="#home"     class="nav-link text-white/85 hover:text-white text-sm font-medium">Ana Sayfa</a>
+                <a href="#products" class="nav-link text-white/85 hover:text-white text-sm font-medium">Ürünler</a>
+                <a href="#services" class="nav-link text-white/85 hover:text-white text-sm font-medium">Hizmetler</a>
+                <a href="#about"    class="nav-link text-white/85 hover:text-white text-sm font-medium">Hakkımızda</a>
+                <a href="#contact"  class="bg-gold hover:bg-gold-light text-forest font-semibold text-sm px-5 py-2.5 rounded-full transition-all duration-200 shadow hover:shadow-md">İletişim</a>
+            </div>
+
+            <!-- Mobile Hamburger -->
+            <button id="menu-btn" class="md:hidden text-white p-2 rounded-lg hover:bg-white/10 transition-colors" aria-label="Menü">
+                <svg id="icon-open"  class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                <svg id="icon-close" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="md:hidden border-t border-white/10">
+            <div class="py-4 space-y-1">
+                <a href="#home"     class="block px-4 py-2.5 text-white/85 hover:text-white hover:bg-white/10 rounded-lg transition-colors text-sm font-medium">Ana Sayfa</a>
+                <a href="#products" class="block px-4 py-2.5 text-white/85 hover:text-white hover:bg-white/10 rounded-lg transition-colors text-sm font-medium">Ürünler</a>
+                <a href="#services" class="block px-4 py-2.5 text-white/85 hover:text-white hover:bg-white/10 rounded-lg transition-colors text-sm font-medium">Hizmetler</a>
+                <a href="#about"    class="block px-4 py-2.5 text-white/85 hover:text-white hover:bg-white/10 rounded-lg transition-colors text-sm font-medium">Hakkımızda</a>
+                <a href="#contact"  class="block mx-4 mt-2 text-center bg-gold hover:bg-gold-light text-forest font-semibold text-sm px-5 py-2.5 rounded-full transition-all">İletişim</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+
+<!-- ════════════════════════════════════════
+     HERO
+════════════════════════════════════════ -->
+<section id="home" class="hero-bg relative min-h-screen flex items-center overflow-hidden pt-18">
+
+    <!-- Decorative SVG leaves -->
+    <svg class="leaf-deco animate-leaf w-96 h-96 -top-16 -right-16" viewBox="0 0 200 200">
+        <path d="M100 10 C140 10 180 50 180 100 C180 150 140 190 100 190 C60 190 20 150 20 100 C20 50 60 10 100 10Z" fill="#74C69D"/>
+    </svg>
+    <svg class="leaf-deco w-72 h-72 bottom-0 -left-24" viewBox="0 0 200 200" style="opacity:.05">
+        <path d="M20 180 C20 100 100 20 180 20 L180 180Z" fill="#C9A84C"/>
+    </svg>
+
+    <!-- Floating dots -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+        <div class="absolute w-2 h-2 bg-gold/30 rounded-full top-1/4 left-1/5 animate-float" style="animation-delay:.5s"></div>
+        <div class="absolute w-3 h-3 bg-mint/20 rounded-full top-1/3 right-1/4 animate-float" style="animation-delay:1.5s"></div>
+        <div class="absolute w-1.5 h-1.5 bg-gold/40 rounded-full bottom-1/3 left-1/3 animate-float" style="animation-delay:2.5s"></div>
+        <div class="absolute w-2 h-2 bg-mint/30 rounded-full top-2/3 right-1/3 animate-float" style="animation-delay:0s"></div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-24">
+        <div class="grid lg:grid-cols-2 gap-12 items-center">
+
+            <!-- Left: Copy -->
+            <div class="text-center lg:text-left">
+                <div class="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-1.5 mb-6 animate-fade-in">
+                    <span class="w-2 h-2 bg-gold rounded-full animate-pulse"></span>
+                    <span class="text-mint text-xs font-semibold tracking-widest uppercase">Ar-Ge · Islah · Tohum</span>
+                </div>
+
+                <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6 animate-fade-up">
+                    Geleceğin<br/>
+                    <span class="grad-text">Sebzelerini</span><br/>
+                    Bugün Tasarlıyoruz
+                </h1>
+
+                <p class="text-white/70 text-lg sm:text-xl leading-relaxed mb-10 max-w-xl mx-auto lg:mx-0 animate-fade-up" style="animation-delay:.2s">
+                    Örtüaltı sebze ıslahı, tohumculuk Ar-Ge'si ve veri analitiği alanlarında bilimsel çözümler sunuyoruz. Bitki ıslahından dijital tarıma, eksiksiz danışmanlık.
+                </p>
+
+                <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start animate-fade-up" style="animation-delay:.4s">
+                    <a href="#services" class="group inline-flex items-center justify-center gap-2 bg-gold hover:bg-gold-light text-forest font-bold px-8 py-4 rounded-full text-base transition-all duration-200 shadow-lg hover:shadow-xl hover:-translate-y-0.5">
+                        Hemen Keşfet
+                        <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                    </a>
+                    <a href="#contact" class="inline-flex items-center justify-center gap-2 glass text-white font-semibold px-8 py-4 rounded-full text-base hover:bg-white/15 transition-all duration-200">
+                        Bize Ulaşın
+                    </a>
+                </div>
+
+                <!-- Stats -->
+                <div class="mt-14 grid grid-cols-3 gap-6 animate-fade-up" style="animation-delay:.6s">
+                    <div class="text-center lg:text-left">
+                        <div class="text-3xl font-bold text-gold">15+</div>
+                        <div class="text-white/60 text-xs mt-1">Yıl Deneyim</div>
+                    </div>
+                    <div class="text-center lg:text-left">
+                        <div class="text-3xl font-bold text-gold">50+</div>
+                        <div class="text-white/60 text-xs mt-1">Tamamlanan Proje</div>
+                    </div>
+                    <div class="text-center lg:text-left">
+                        <div class="text-3xl font-bold text-gold">8+</div>
+                        <div class="text-white/60 text-xs mt-1">Sebze Türü</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Visual -->
+            <div class="hidden lg:flex justify-center items-center relative">
+                <div class="w-80 h-80 rounded-full bg-fern/40 flex items-center justify-center relative animate-pulse2">
+                    <div class="w-64 h-64 rounded-full bg-sage/40 flex items-center justify-center">
+                        <div class="w-48 h-48 rounded-full bg-mint/20 flex items-center justify-center">
+                            <!-- Central logo art -->
+                            <svg viewBox="0 0 160 160" class="w-44 h-44 animate-float" fill="none">
+                                <!-- Soil base -->
+                                <ellipse cx="80" cy="130" rx="50" ry="8" fill="#1B4332" opacity=".5"/>
+                                <!-- Stem -->
+                                <path d="M80 125 L80 80" stroke="#74C69D" stroke-width="3" stroke-linecap="round"/>
+                                <!-- Big left leaf -->
+                                <path d="M80 95 C60 85 35 88 30 70 C55 65 75 78 80 95Z" fill="#40916C"/>
+                                <!-- Big right leaf -->
+                                <path d="M80 85 C100 75 125 78 130 60 C105 55 85 68 80 85Z" fill="#2D6A4F"/>
+                                <!-- Top leaves -->
+                                <path d="M80 75 C65 60 65 40 80 30 C95 40 95 60 80 75Z" fill="#74C69D"/>
+                                <!-- Berry/fruit dots -->
+                                <circle cx="60" cy="72" r="5" fill="#C9A84C"/>
+                                <circle cx="100" cy="62" r="4" fill="#E8C97A"/>
+                                <circle cx="80" cy="32" r="3.5" fill="#B7E4C7"/>
+                                <!-- Data dots decoration -->
+                                <circle cx="30" cy="110" r="2" fill="#C9A84C" opacity=".5"/>
+                                <circle cx="130" cy="105" r="2.5" fill="#74C69D" opacity=".5"/>
+                                <circle cx="20" cy="85" r="1.5" fill="#C9A84C" opacity=".4"/>
+                                <circle cx="140" cy="80" r="2" fill="#74C69D" opacity=".4"/>
+                                <!-- DNA/data line -->
+                                <path d="M20 45 Q35 35 50 45 Q65 55 80 45 Q95 35 110 45 Q125 55 140 45" stroke="#C9A84C" stroke-width="1.5" stroke-dasharray="3 2" opacity=".4"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Orbit badges -->
+                <div class="absolute top-8 right-4 glass rounded-xl px-3 py-2 text-center animate-float" style="animation-delay:1s">
+                    <div class="text-gold font-bold text-sm">DNA</div>
+                    <div class="text-white/70 text-xs">Islah</div>
+                </div>
+                <div class="absolute bottom-14 left-2 glass rounded-xl px-3 py-2 text-center animate-float" style="animation-delay:2s">
+                    <div class="text-mint font-bold text-sm">📊</div>
+                    <div class="text-white/70 text-xs">Veri Analizi</div>
+                </div>
+                <div class="absolute top-1/2 -right-4 glass rounded-xl px-3 py-2 text-center animate-float" style="animation-delay:.3s">
+                    <div class="text-gold font-bold text-sm">🌱</div>
+                    <div class="text-white/70 text-xs">Tohum</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom wave -->
+    <div class="absolute bottom-0 left-0 right-0">
+        <svg viewBox="0 0 1440 60" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" class="w-full">
+            <path d="M0 60 L0 30 Q360 0 720 30 Q1080 60 1440 20 L1440 60Z" fill="#F8F4EC"/>
+        </svg>
+    </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     PRODUCTS
+════════════════════════════════════════ -->
+<section id="products" class="py-24 bg-cream">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <!-- Heading -->
+        <div class="text-center mb-16 reveal">
+            <span class="inline-block bg-mist text-fern text-xs font-bold tracking-widest uppercase px-4 py-1.5 rounded-full mb-4">Ürün Portföyümüz</span>
+            <h2 class="font-display text-3xl sm:text-4xl font-bold text-forest mb-4">Örtüaltı Sebze Çeşitlerimiz</h2>
+            <p class="text-fern/70 text-lg max-w-2xl mx-auto">Islah programlarımızda geliştirilen, yüksek verim ve hastalık toleransına sahip çeşit adayları.</p>
+        </div>
+
+        <!-- Category tabs -->
+        <div class="flex flex-wrap justify-center gap-3 mb-12 reveal">
+            <button onclick="filterProducts('all')"     class="product-tab active-tab px-5 py-2 rounded-full text-sm font-semibold transition-all">Tümü</button>
+            <button onclick="filterProducts('meyve')"   class="product-tab px-5 py-2 rounded-full text-sm font-semibold transition-all">Meyveli Sebzeler</button>
+            <button onclick="filterProducts('kislik')"  class="product-tab px-5 py-2 rounded-full text-sm font-semibold transition-all">Kışlık Sebzeler</button>
+        </div>
+
+        <style>
+            .product-tab { background:#EDE8DC; color:#2D6A4F; }
+            .product-tab:hover { background:#D8F3DC; }
+            .active-tab { background:#2D6A4F !important; color:#fff !important; }
+        </style>
+
+        <!-- Grid -->
+        <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+            <!-- Domates -->
+            <div class="product-card card-hover reveal bg-white rounded-2xl overflow-hidden shadow-sm border border-parchment cursor-pointer" data-cat="meyve">
+                <div class="relative h-44 flex items-center justify-center overflow-hidden" style="background:linear-gradient(135deg,#fde8e8,#fbb6b6)">
+                    <svg viewBox="0 0 80 80" class="w-28 h-28" fill="none">
+                        <circle cx="40" cy="48" r="26" fill="#E53E3E"/>
+                        <circle cx="40" cy="48" r="26" fill="url(#rgrad)"/>
+                        <defs><radialGradient id="rgrad" cx="35%" cy="35%"><stop offset="0%" stop-color="#FC8181"/><stop offset="100%" stop-color="#C53030"/></radialGradient></defs>
+                        <path d="M34 20 C34 14 38 10 40 8 C42 10 46 14 46 20" stroke="#276749" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+                        <path d="M30 22 C26 16 26 10 28 8" stroke="#276749" stroke-width="2" stroke-linecap="round" fill="none"/>
+                        <path d="M50 22 C54 16 54 10 52 8" stroke="#276749" stroke-width="2" stroke-linecap="round" fill="none"/>
+                        <ellipse cx="32" cy="42" rx="5" ry="8" fill="rgba(255,255,255,.18)" transform="rotate(-20 32 42)"/>
+                    </svg>
+                    <span class="absolute top-3 right-3 bg-white/80 text-red-600 text-xs font-bold px-2 py-1 rounded-full">🔥 Popüler</span>
+                </div>
+                <div class="p-5">
+                    <h3 class="font-bold text-forest text-lg mb-1">Domates</h3>
+                    <p class="text-sm text-fern/70 mb-3">Yüksek verimli indeterminate ve determinate tip çeşit adayları. TSWV ve TYLCV toleranslı.</p>
+                    <div class="flex flex-wrap gap-1.5">
+                        <span class="text-xs bg-mist text-fern px-2 py-0.5 rounded-full">Sofralık</span>
+                        <span class="text-xs bg-mist text-fern px-2 py-0.5 rounded-full">Salkım</span>
+                        <span class="text-xs bg-mist text-fern px-2 py-0.5 rounded-full">Cherry</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Biber -->
+            <div class="product-card card-hover reveal bg-white rounded-2xl overflow-hidden shadow-sm border border-parchment cursor-pointer" data-cat="meyve" style="transition-delay:.05s">
+                <div class="relative h-44 flex items-center justify-center overflow-hidden" style="background:linear-gradient(135deg,#fefce8,#fde68a)">
+                    <svg viewBox="0 0 80 80" class="w-28 h-28" fill="none">
+                        <path d="M40 14 C38 10 36 8 34 9 C32 10 32 14 34 16" stroke="#2D6A4F" stroke-width="2" stroke-linecap="round" fill="none"/>
+                        <path d="M40 14 C42 10 44 8 46 9 C48 10 48 14 46 16" stroke="#2D6A4F" stroke-width="2" stroke-linecap="round" fill="none"/>
+                        <path d="M40 16 C44 20 52 32 50 50 C49 60 40 68 36 65 C28 61 22 48 26 34 C28 24 36 18 40 16Z" fill="#D97706"/>
+                        <path d="M40 16 C44 20 52 32 50 50 C49 60 40 68 36 65 C28 61 22 48 26 34 C28 24 36 18 40 16Z" fill="url(#bgrad)"/>
+                        <defs><linearGradient id="bgrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FBBF24"/><stop offset="100%" stop-color="#B45309"/></linearGradient></defs>
+                        <ellipse cx="34" cy="36" rx="4" ry="10" fill="rgba(255,255,255,.2)" transform="rotate(-10 34 36)"/>
+                    </svg>
+                </div>
+                <div class="p-5">
+                    <h3 class="font-bold text-forest text-lg mb-1">Biber</h3>
+                    <p class="text-sm text-fern/70 mb-3">Sivri, dolmalık ve kapya tiplerde çeşit adayları. CMV ve TMV dayanımlı hibrit programları.</p>
+                    <div class="flex flex-wrap gap-1.5">
+                        <span class="text-xs bg-mist text-fern px-2 py-0.5 rounded-full">Sivri</span>
+                        <span class="text-xs bg-mist text-fern px-2 py-0.5 rounded-full">Dolmalık</span>
+                        <span class="text-xs bg-mist text-fern px-2 py-0.5 rounded-full">Kapya</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hıyar -->
+            <div class="product-card card-hover reveal bg-white rounded-2xl overflow-hidden shadow-sm border border-parchment cursor-pointer" data-cat="meyve" style="transition-delay:.1s">
+                <div class="relative h-44 flex items-center justify-center overflow-hidden" style="background:linear-gradient(135deg,#f0fdf4,#bbf7d0)">
+                    <svg viewBox="0 0 80 80" class="w-28 h-28" fill="none">
+                        <rect x="22" y="18" width="36" height="44" rx="18" fill="#16A34A" transform="rotate(-15 40 40)"/>
+                        <rect x="22" y="18" width="36" height="44" rx="18" fill="url(#hgrad)" transform="rotate(-15 40 40)"/>
+                        <defs><linearGradient id="hgrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#4ADE80"/><stop offset="100%" stop-color="#15803D"/></linearGradient></defs>
+                        <!-- stripes -->
+                        <line x1="26" y1="28" x2="32" y2="52" stroke="rgba(255,255,255,.25)" stroke-width="3" stroke-linecap="round" transform="rotate(-15 40 40)"/>
+                        <line x1="34" y1="22" x2="40" y2="54" stroke="rgba(255,255,255,.15)" stroke-width="2" stroke-linecap="round" transform="rotate(-15 40 40)"/>
+                    </svg>
+                </div>
+                <div class="p-5">
+                    <h3 class="font-bold text-forest text-lg mb-1">Hıyar</h3>
+                    <p class="text-sm text-fern/70 mb-3">Partenokarpik ve tozlanmalı tiplerde yüksek verimli, hastalık toleranslı hibrit çeşitler.</p>
+                    <div class="flex flex-wrap gap-1.5">
+                        <span class="text-xs bg-mist text-fern px-2 py-0.5 rounded-full">Mini</span>
+                        <span class="text-xs bg-mist text-fern px-2 py-0.5 rounded-full">Sofralık</span>
+                        <span class="text-xs bg-mist text-fern px-2 py-0.5 rounded-full">Kornişon</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Patlıcan -->
+            <div class="product-card card-hover reveal bg-white rounded-2xl overflow-hidden shadow-sm border border-parchment cursor-pointer" data-cat="meyve" style="transition-delay:.15s">
+                <div class="relative h-44 flex items-center justify-center overflow-hidden" style="background:linear-gradient(135deg,#faf5ff,#e9d5ff)">
+                    <svg viewBox="0 0 80 80" class="w-28 h-28" fill="none">
+                        <ellipse cx="40" cy="50" rx="20" ry="26" fill="#7C3AED"/>
+                        <ellipse cx="40" cy="50" rx="20" ry="26" fill="url(#pgrad)"/>
+                        <defs><radialGradient id="pgrad" cx="35%" cy="30%"><stop offset="0%" stop-color="#A78BFA"/><stop offset="100%" stop-color="#5B21B6"/></radialGradient></defs>
+                        <path d="M38 22 C36 16 34 12 36 10 C40 8 44 12 42 18" stroke="#166534" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+                        <path d="M34 20 C28 16 26 12 28 10" stroke="#166534" stroke-width="2" stroke-linecap="round" fill="none"/>
+                        <ellipse cx="33" cy="44" rx="4" ry="9" fill="rgba(255,255,255,.2)" transform="rotate(-15 33 44)"/>
+                    </svg>
+                </div>
+                <div class="p-5">
+                    <h3 class="font-bold text-forest text-lg mb-1">Patlıcan</h3>
+                    <p class="text-sm text-fern/70 mb-3">Kemer, bostan ve karnıyarık tiplerinde ıslah programları. Verticillium toleranslı genotiplere odaklanma.</p>
+                    <div class="flex flex-wrap gap-1.5">
+                        <span class="text-xs bg-mist text-fern px-2 py-0.5 rounded-full">Kemer</span>
+                        <span class="text-xs bg-mist text-fern px-2 py-0.5 rounded-full">Bostan</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Kavun -->
+            <div class="product-card card-hover reveal bg-white rounded-2xl overflow-hidden shadow-sm border border-parchment cursor-pointer" data-cat="meyve" style="transition-delay:.2s">
+                <div class="relative h-44 flex items-center justify-center overflow-hidden" style="background:linear-gradient(135deg,#fffbeb,#fef3c7)">
+                    <svg viewBox="0 0 80 80" class="w-28 h-28" fill="none">
+                        <circle cx="40" cy="44" r="26" fill="#D97706"/>
+                        <circle cx="40" cy="44" r="26" fill="url(#kavgrad)"/>
+                        <defs><radialGradient id="kavgrad" cx="40%" cy="35%"><stop offset="0%" stop-color="#FCD34D"/><stop offset="100%" stop-color="#B45309"/></radialGradient></defs>
+                        <!-- net pattern -->
+                        <path d="M20 44 Q40 30 60 44" stroke="rgba(0,0,0,.1)" stroke-width="1" fill="none"/>
+                        <path d="M20 50 Q40 36 60 50" stroke="rgba(0,0,0,.1)" stroke-width="1" fill="none"/>
+                        <path d="M20 56 Q40 42 60 56" stroke="rgba(0,0,0,.1)" stroke-width="1" fill="none"/>
+                        <path d="M30 20 Q34 44 30 65" stroke="rgba(0,0,0,.1)" stroke-width="1" fill="none"/>
+                        <path d="M40 18 Q44 44 40 68" stroke="rgba(0,0,0,.1)" stroke-width="1" fill="none"/>
+                        <path d="M50 20 Q46 44 50 65" stroke="rgba(0,0,0,.1)" stroke-width="1" fill="none"/>
+                        <path d="M38 10 C36 6 38 4 40 4 C42 4 44 6 42 10" stroke="#2D6A4F" stroke-width="2" stroke-linecap="round" fill="none"/>
+                    </svg>
+                </div>
+                <div class="p-5">
+                    <h3 class="font-bold text-forest text-lg mb-1">Kavun</h3>
+                    <p class="text-sm text-fern/70 mb-3">İlkbahar ve sonbahar üretimine uygun, aroması yüksek, şeker içeriği optimize edilmiş hibrit çeşitler.</p>
+                    <div class="flex flex-wrap gap-1.5">
+                        <span class="text-xs bg-mist text-fern px-2 py-0.5 rounded-full">Yazlık</span>
+                        <span class="text-xs bg-mist text-fern px-2 py-0.5 rounded-full">Kışlık</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Karpuz -->
+            <div class="product-card card-hover reveal bg-white rounded-2xl overflow-hidden shadow-sm border border-parchment cursor-pointer" data-cat="meyve" style="transition-delay:.25s">
+                <div class="relative h-44 flex items-center justify-center overflow-hidden" style="background:linear-gradient(135deg,#f0fdf4,#dcfce7)">
+                    <svg viewBox="0 0 80 80" class="w-28 h-28" fill="none">
+                        <circle cx="40" cy="44" r="26" fill="#16A34A"/>
+                        <circle cx="40" cy="44" r="26" fill="url(#karpgrad)"/>
+                        <defs><radialGradient id="karpgrad" cx="40%" cy="35%"><stop offset="0%" stop-color="#4ADE80"/><stop offset="100%" stop-color="#166534"/></radialGradient></defs>
+                        <!-- stripes -->
+                        <path d="M14 44 Q40 18 66 44" fill="rgba(0,0,0,.08)" stroke="none"/>
+                        <path d="M17 50 Q40 28 63 50" fill="rgba(0,0,0,.06)" stroke="none"/>
+                        <!-- inner flesh hint -->
+                        <circle cx="40" cy="48" r="18" fill="#EF4444" opacity=".85"/>
+                        <!-- seeds -->
+                        <ellipse cx="34" cy="46" rx="2" ry="3" fill="#1C1917" transform="rotate(-15 34 46)" opacity=".7"/>
+                        <ellipse cx="40" cy="52" rx="2" ry="3" fill="#1C1917" opacity=".7"/>
+                        <ellipse cx="47" cy="46" rx="2" ry="3" fill="#1C1917" transform="rotate(15 47 46)" opacity=".7"/>
+                    </svg>
+                </div>
+                <div class="p-5">
+                    <h3 class="font-bold text-forest text-lg mb-1">Karpuz</h3>
+                    <p class="text-sm text-fern/70 mb-3">Tohumlu ve tohumsuz, mini ve standart boy hibrit ıslah programları. Fusarium dayanımlılık.</p>
+                    <div class="flex flex-wrap gap-1.5">
+                        <span class="text-xs bg-mist text-fern px-2 py-0.5 rounded-full">Seedless</span>
+                        <span class="text-xs bg-mist text-fern px-2 py-0.5 rounded-full">Mini</span>
+                        <span class="text-xs bg-mist text-fern px-2 py-0.5 rounded-full">Standart</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Brokoli -->
+            <div class="product-card card-hover reveal bg-white rounded-2xl overflow-hidden shadow-sm border border-parchment cursor-pointer" data-cat="kislik" style="transition-delay:.3s">
+                <div class="relative h-44 flex items-center justify-center overflow-hidden" style="background:linear-gradient(135deg,#f0fdf4,#a7f3d0)">
+                    <svg viewBox="0 0 80 80" class="w-28 h-28" fill="none">
+                        <!-- stem -->
+                        <rect x="36" y="52" width="8" height="18" rx="3" fill="#15803D"/>
+                        <!-- florets -->
+                        <circle cx="40" cy="38" r="16" fill="#16A34A"/>
+                        <circle cx="28" cy="44" r="11" fill="#15803D"/>
+                        <circle cx="52" cy="44" r="11" fill="#15803D"/>
+                        <circle cx="40" cy="26" r="10" fill="#22C55E"/>
+                        <circle cx="28" cy="32" r="9" fill="#16A34A"/>
+                        <circle cx="52" cy="32" r="9" fill="#16A34A"/>
+                        <!-- highlight dots -->
+                        <circle cx="35" cy="24" r="3" fill="#4ADE80"/>
+                        <circle cx="24" cy="30" r="2.5" fill="#4ADE80"/>
+                        <circle cx="48" cy="22" r="2" fill="#4ADE80"/>
+                    </svg>
+                </div>
+                <div class="p-5">
+                    <h3 class="font-bold text-forest text-lg mb-1">Brokoli</h3>
+                    <p class="text-sm text-fern/70 mb-3">Kışlık kaliteli baş oluşumu ve uzun hasat penceresine sahip hibrit çeşit adayları. Sıcaklık toleranslı.</p>
+                    <div class="flex flex-wrap gap-1.5">
+                        <span class="text-xs bg-mist text-fern px-2 py-0.5 rounded-full">Erken</span>
+                        <span class="text-xs bg-mist text-fern px-2 py-0.5 rounded-full">Orta</span>
+                        <span class="text-xs bg-mist text-fern px-2 py-0.5 rounded-full">Geçci</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Karnabahar -->
+            <div class="product-card card-hover reveal bg-white rounded-2xl overflow-hidden shadow-sm border border-parchment cursor-pointer" data-cat="kislik" style="transition-delay:.35s">
+                <div class="relative h-44 flex items-center justify-center overflow-hidden" style="background:linear-gradient(135deg,#fafafa,#f1f5f9)">
+                    <svg viewBox="0 0 80 80" class="w-28 h-28" fill="none">
+                        <!-- stem -->
+                        <rect x="35" y="54" width="10" height="16" rx="3" fill="#D1D5DB"/>
+                        <!-- leaves -->
+                        <path d="M30 54 C20 50 18 42 24 38 C28 36 34 42 34 54Z" fill="#4ADE80"/>
+                        <path d="M50 54 C60 50 62 42 56 38 C52 36 46 42 46 54Z" fill="#22C55E"/>
+                        <!-- curd -->
+                        <circle cx="40" cy="38" r="18" fill="#F9FAFB"/>
+                        <circle cx="32" cy="34" r="10" fill="#F3F4F6"/>
+                        <circle cx="48" cy="34" r="10" fill="#F3F4F6"/>
+                        <circle cx="40" cy="26" r="11" fill="#FFFFFF"/>
+                        <circle cx="33" cy="28" r="8" fill="#F9FAFB"/>
+                        <circle cx="47" cy="28" r="8" fill="#F9FAFB"/>
+                        <!-- texture -->
+                        <circle cx="36" cy="24" r="3" fill="#E5E7EB"/>
+                        <circle cx="44" cy="22" r="3.5" fill="#E5E7EB"/>
+                        <circle cx="28" cy="30" r="3" fill="#E5E7EB"/>
+                        <circle cx="52" cy="30" r="3" fill="#E5E7EB"/>
+                    </svg>
+                </div>
+                <div class="p-5">
+                    <h3 class="font-bold text-forest text-lg mb-1">Karnabahar</h3>
+                    <p class="text-sm text-fern/70 mb-3">Sıkı, beyaz kaliteli baş yapısı ve geniş iklim adaptasyonu olan kışlık hibrit çeşit programları.</p>
+                    <div class="flex flex-wrap gap-1.5">
+                        <span class="text-xs bg-mist text-fern px-2 py-0.5 rounded-full">Standart</span>
+                        <span class="text-xs bg-mist text-fern px-2 py-0.5 rounded-full">Mor</span>
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- /grid -->
+    </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     SERVICES
+════════════════════════════════════════ -->
+<section id="services" class="py-24 bg-white relative overflow-hidden">
+
+    <div class="absolute inset-0 pointer-events-none">
+        <div class="absolute -top-32 -right-32 w-96 h-96 rounded-full bg-mist/50"></div>
+        <div class="absolute -bottom-24 -left-24 w-72 h-72 rounded-full bg-parchment/70"></div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+
+        <div class="text-center mb-16 reveal">
+            <span class="inline-block bg-mist text-fern text-xs font-bold tracking-widest uppercase px-4 py-1.5 rounded-full mb-4">Ne Yapıyoruz?</span>
+            <h2 class="font-display text-3xl sm:text-4xl font-bold text-forest mb-4">Hizmetlerimiz</h2>
+            <p class="text-fern/70 text-lg max-w-2xl mx-auto">Sahadaki deneme parsellerinden dijital veri analizine kadar bütünleşik danışmanlık hizmetleri.</p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7">
+
+            <!-- Islah -->
+            <div class="card-hover reveal group bg-gradient-to-br from-cream to-parchment rounded-2xl p-7 border border-parchment/80 relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-fern/5 rounded-bl-full transition-all group-hover:bg-fern/10"></div>
+                <div class="w-14 h-14 bg-fern rounded-xl flex items-center justify-center mb-5 shadow-md group-hover:scale-110 transition-transform">
+                    <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 3v1m0 16v1M3 12h1m16 0h1M6.3 6.3l.7.7m10 10l.7.7M6.3 17.7l.7-.7m10-10l.7-.7M12 8a4 4 0 110 8 4 4 0 010-8z"/></svg>
+                </div>
+                <h3 class="font-bold text-forest text-xl mb-3">Bitki Islahı</h3>
+                <p class="text-fern/70 text-sm leading-relaxed mb-4">Hastalık dayanımlılığı, verim, kalite ve iklim adaptasyonuna odaklanan bilimsel ıslah programlarının tasarımı ve yürütümü.</p>
+                <ul class="space-y-2">
+                    <li class="flex items-center gap-2 text-xs text-fern/80"><span class="w-1.5 h-1.5 bg-gold rounded-full flex-shrink-0"></span>Hibrit çeşit geliştirme</li>
+                    <li class="flex items-center gap-2 text-xs text-fern/80"><span class="w-1.5 h-1.5 bg-gold rounded-full flex-shrink-0"></span>Ebeveyn hat seleksiyonu</li>
+                    <li class="flex items-center gap-2 text-xs text-fern/80"><span class="w-1.5 h-1.5 bg-gold rounded-full flex-shrink-0"></span>MAS (Marker Destekli Seleksiyon)</li>
+                </ul>
+            </div>
+
+            <!-- Tohum Üretimi -->
+            <div class="card-hover reveal group bg-gradient-to-br from-cream to-parchment rounded-2xl p-7 border border-parchment/80 relative overflow-hidden" style="transition-delay:.05s">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-sage/5 rounded-bl-full transition-all group-hover:bg-sage/10"></div>
+                <div class="w-14 h-14 bg-sage rounded-xl flex items-center justify-center mb-5 shadow-md group-hover:scale-110 transition-transform">
+                    <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 22s8-4 8-10V6l-8-3-8 3v6c0 6 8 10 8 10z"/></svg>
+                </div>
+                <h3 class="font-bold text-forest text-xl mb-3">Tohum Üretimi</h3>
+                <p class="text-fern/70 text-sm leading-relaxed mb-4">Üretim sözleşmesi, kalite kontrolü ve sertifikasyon süreçleri dahil end-to-end tohum üretim danışmanlığı.</p>
+                <ul class="space-y-2">
+                    <li class="flex items-center gap-2 text-xs text-fern/80"><span class="w-1.5 h-1.5 bg-gold rounded-full flex-shrink-0"></span>Üretim alanı seçimi ve yönetimi</li>
+                    <li class="flex items-center gap-2 text-xs text-fern/80"><span class="w-1.5 h-1.5 bg-gold rounded-full flex-shrink-0"></span>Tohum işleme süreçleri</li>
+                    <li class="flex items-center gap-2 text-xs text-fern/80"><span class="w-1.5 h-1.5 bg-gold rounded-full flex-shrink-0"></span>Çimlenme & saflık testleri</li>
+                </ul>
+            </div>
+
+            <!-- Deneme Takip -->
+            <div class="card-hover reveal group bg-gradient-to-br from-cream to-parchment rounded-2xl p-7 border border-parchment/80 relative overflow-hidden" style="transition-delay:.1s">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-mint/10 rounded-bl-full transition-all group-hover:bg-mint/20"></div>
+                <div class="w-14 h-14 bg-mint rounded-xl flex items-center justify-center mb-5 shadow-md group-hover:scale-110 transition-transform">
+                    <svg class="w-7 h-7 text-forest" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+                </div>
+                <h3 class="font-bold text-forest text-xl mb-3">Deneme Takip</h3>
+                <p class="text-fern/70 text-sm leading-relaxed mb-4">UPOV protokolleri ve uluslararası standartlara uygun tarla ve sera denemelerinin tasarımı, gözlem ve raporlanması.</p>
+                <ul class="space-y-2">
+                    <li class="flex items-center gap-2 text-xs text-fern/80"><span class="w-1.5 h-1.5 bg-gold rounded-full flex-shrink-0"></span>Deneme deseni tasarımı (RCBD, α-design)</li>
+                    <li class="flex items-center gap-2 text-xs text-fern/80"><span class="w-1.5 h-1.5 bg-gold rounded-full flex-shrink-0"></span>Fenotipik gözlem ve veri toplama</li>
+                    <li class="flex items-center gap-2 text-xs text-fern/80"><span class="w-1.5 h-1.5 bg-gold rounded-full flex-shrink-0"></span>UPOV DUS raporlaması</li>
+                </ul>
+            </div>
+
+            <!-- Veri Analizi -->
+            <div class="card-hover reveal group bg-gradient-to-br from-cream to-parchment rounded-2xl p-7 border border-parchment/80 relative overflow-hidden" style="transition-delay:.15s">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-gold/5 rounded-bl-full transition-all group-hover:bg-gold/10"></div>
+                <div class="w-14 h-14 bg-gold rounded-xl flex items-center justify-center mb-5 shadow-md group-hover:scale-110 transition-transform">
+                    <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+                </div>
+                <h3 class="font-bold text-forest text-xl mb-3">Veri Analizi</h3>
+                <p class="text-fern/70 text-sm leading-relaxed mb-4">Islah ve deneme verilerinin istatistiksel analizi, heritabilite hesaplamaları ve genotip × çevre etkileşimi modellemesi.</p>
+                <ul class="space-y-2">
+                    <li class="flex items-center gap-2 text-xs text-fern/80"><span class="w-1.5 h-1.5 bg-gold rounded-full flex-shrink-0"></span>ANOVA, AMMI, GGE biplot</li>
+                    <li class="flex items-center gap-2 text-xs text-fern/80"><span class="w-1.5 h-1.5 bg-gold rounded-full flex-shrink-0"></span>Tahmin modelleri (mixed models)</li>
+                    <li class="flex items-center gap-2 text-xs text-fern/80"><span class="w-1.5 h-1.5 bg-gold rounded-full flex-shrink-0"></span>R / Python ile analiz</li>
+                </ul>
+            </div>
+
+            <!-- Görselleştirme -->
+            <div class="card-hover reveal group bg-gradient-to-br from-cream to-parchment rounded-2xl p-7 border border-parchment/80 relative overflow-hidden" style="transition-delay:.2s">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-fern/5 rounded-bl-full transition-all group-hover:bg-fern/10"></div>
+                <div class="w-14 h-14 bg-fern rounded-xl flex items-center justify-center mb-5 shadow-md group-hover:scale-110 transition-transform">
+                    <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"/></svg>
+                </div>
+                <h3 class="font-bold text-forest text-xl mb-3">Veri Görselleştirme</h3>
+                <p class="text-fern/70 text-sm leading-relaxed mb-4">Islah ve deneme verilerinin anlamlı görsellere dönüştürülmesi; etkileşimli dashboard ve raporlar.</p>
+                <ul class="space-y-2">
+                    <li class="flex items-center gap-2 text-xs text-fern/80"><span class="w-1.5 h-1.5 bg-gold rounded-full flex-shrink-0"></span>GGE & AMMI biplot grafikleri</li>
+                    <li class="flex items-center gap-2 text-xs text-fern/80"><span class="w-1.5 h-1.5 bg-gold rounded-full flex-shrink-0"></span>Power BI / Tableau dashboard</li>
+                    <li class="flex items-center gap-2 text-xs text-fern/80"><span class="w-1.5 h-1.5 bg-gold rounded-full flex-shrink-0"></span>Otomatik raporlama (R Markdown)</li>
+                </ul>
+            </div>
+
+            <!-- Yazılım -->
+            <div class="card-hover reveal group bg-gradient-to-br from-cream to-parchment rounded-2xl p-7 border border-parchment/80 relative overflow-hidden" style="transition-delay:.25s">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-sage/5 rounded-bl-full transition-all group-hover:bg-sage/10"></div>
+                <div class="w-14 h-14 bg-sage rounded-xl flex items-center justify-center mb-5 shadow-md group-hover:scale-110 transition-transform">
+                    <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+                </div>
+                <h3 class="font-bold text-forest text-xl mb-3">Yazılım Çözümleri</h3>
+                <p class="text-fern/70 text-sm leading-relaxed mb-4">Islah yönetim sistemi, veri toplama uygulamaları ve otomasyona yönelik özel yazılım geliştirme.</p>
+                <ul class="space-y-2">
+                    <li class="flex items-center gap-2 text-xs text-fern/80"><span class="w-1.5 h-1.5 bg-gold rounded-full flex-shrink-0"></span>Islah veri yönetim sistemi</li>
+                    <li class="flex items-center gap-2 text-xs text-fern/80"><span class="w-1.5 h-1.5 bg-gold rounded-full flex-shrink-0"></span>Mobil gözlem uygulaması</li>
+                    <li class="flex items-center gap-2 text-xs text-fern/80"><span class="w-1.5 h-1.5 bg-gold rounded-full flex-shrink-0"></span>API entegrasyonları</li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     ABOUT
+════════════════════════════════════════ -->
+<section id="about" class="py-24 bg-cream relative overflow-hidden">
+
+    <div class="absolute inset-0 pointer-events-none overflow-hidden">
+        <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-forest via-sage to-gold opacity-30"></div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid lg:grid-cols-2 gap-16 items-center">
+
+            <!-- Left visual -->
+            <div class="relative reveal">
+                <div class="relative rounded-3xl overflow-hidden h-[460px] bg-gradient-to-br from-forest to-fern flex items-center justify-center shadow-2xl">
+
+                    <!-- Decorative background pattern -->
+                    <div class="absolute inset-0 opacity-10">
+                        <svg viewBox="0 0 400 400" class="w-full h-full">
+                            <defs>
+                                <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                                    <path d="M40 0L0 0 0 40" fill="none" stroke="white" stroke-width=".5"/>
+                                </pattern>
+                            </defs>
+                            <rect width="400" height="400" fill="url(#grid)"/>
+                        </svg>
+                    </div>
+
+                    <!-- Central content -->
+                    <div class="relative text-center px-10">
+                        <!-- Large plant illustration -->
+                        <svg viewBox="0 0 200 200" class="w-48 h-48 mx-auto mb-6 animate-float" fill="none">
+                            <circle cx="100" cy="160" r="25" fill="#1B4332" opacity=".6"/>
+                            <rect x="95" y="100" width="10" height="65" rx="4" fill="#40916C"/>
+                            <!-- Branches -->
+                            <path d="M100 130 C80 120 60 108 55 90 C70 85 90 98 100 118" fill="#2D6A4F"/>
+                            <path d="M100 120 C120 110 140 98 145 80 C130 75 110 88 100 108" fill="#40916C"/>
+                            <path d="M100 105 C85 90 82 70 90 55 C105 60 110 80 100 100" fill="#74C69D"/>
+                            <!-- Top leaf -->
+                            <path d="M96 55 C88 38 94 22 100 16 C106 22 112 38 104 55 C102 62 98 62 96 55Z" fill="#B7E4C7"/>
+                            <!-- Data dots -->
+                            <circle cx="55" cy="90" r="4" fill="#C9A84C"/>
+                            <circle cx="145" cy="80" r="4" fill="#C9A84C"/>
+                            <circle cx="90" cy="55" r="3" fill="#E8C97A"/>
+                            <!-- Connection lines -->
+                            <path d="M30 60 L55 90" stroke="#C9A84C" stroke-width="1" stroke-dasharray="3 2" opacity=".5"/>
+                            <path d="M170 50 L145 80" stroke="#C9A84C" stroke-width="1" stroke-dasharray="3 2" opacity=".5"/>
+                            <circle cx="30" cy="60" r="3" fill="#C9A84C" opacity=".6"/>
+                            <circle cx="170" cy="50" r="3" fill="#C9A84C" opacity=".6"/>
+                            <!-- DNA helix hint -->
+                            <path d="M15 140 Q25 130 35 140 Q45 150 55 140" stroke="#74C69D" stroke-width="1.5" fill="none" opacity=".4"/>
+                            <path d="M15 148 Q25 138 35 148 Q45 158 55 148" stroke="#74C69D" stroke-width="1.5" fill="none" opacity=".4"/>
+                            <line x1="20" y1="133" x2="20" y2="145" stroke="#74C69D" stroke-width="1" opacity=".3"/>
+                            <line x1="35" y1="140" x2="35" y2="148" stroke="#74C69D" stroke-width="1" opacity=".3"/>
+                            <line x1="50" y1="133" x2="50" y2="145" stroke="#74C69D" stroke-width="1" opacity=".3"/>
+                        </svg>
+
+                        <div class="text-white/90 font-display text-xl font-semibold mb-2">Bilim & Doğa & Veri</div>
+                        <div class="text-mint/80 text-sm">Her tohumda bir algoritma saklıdır.</div>
+                    </div>
+
+                    <!-- Corner badges -->
+                    <div class="absolute top-5 left-5 glass rounded-xl p-3 text-center">
+                        <div class="text-gold font-bold text-2xl">15+</div>
+                        <div class="text-white/70 text-xs">Yıl</div>
+                    </div>
+                    <div class="absolute top-5 right-5 glass rounded-xl p-3 text-center">
+                        <div class="text-mint font-bold text-2xl">50+</div>
+                        <div class="text-white/70 text-xs">Proje</div>
+                    </div>
+                    <div class="absolute bottom-5 left-5 glass rounded-xl p-3 text-center">
+                        <div class="text-gold font-bold text-2xl">8+</div>
+                        <div class="text-white/70 text-xs">Tür</div>
+                    </div>
+                    <div class="absolute bottom-5 right-5 glass rounded-xl p-3 text-center">
+                        <div class="text-mint font-bold text-xl">Ar-Ge</div>
+                        <div class="text-white/70 text-xs">Odaklı</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right copy -->
+            <div class="reveal" style="transition-delay:.15s">
+                <span class="inline-block bg-mist text-fern text-xs font-bold tracking-widest uppercase px-4 py-1.5 rounded-full mb-5">Hakkımızda</span>
+                <h2 class="font-display text-3xl sm:text-4xl font-bold text-forest mb-6 leading-snug">
+                    Tohumdan Veriye,<br/>
+                    <span class="text-sage">Bilimsel Danışmanlık</span>
+                </h2>
+                <p class="text-fern/70 text-base leading-relaxed mb-5">
+                    <strong class="text-forest">GznAgri & Data Consulting</strong>, örtüaltı sebze ıslahı, tohumculuk Ar-Ge'si ve tarımsal veri analitiği alanlarında faaliyet gösteren bağımsız bir danışmanlık firmasıdır. Amacımız; akademik birikimi sahaya taşımak, tohumculuk sektörünün rekabet gücünü artırmaktır.
+                </p>
+                <p class="text-fern/70 text-base leading-relaxed mb-8">
+                    Domates, biber, hıyar, kavun, karpuz, patlıcan ile brokoli ve karnabahar başta olmak üzere geniş bir ürün yelpazesinde hibrit çeşit geliştirme, deneme yönetimi ve veri odaklı karar destek sistemleri sunuyoruz.
+                </p>
+
+                <!-- Values -->
+                <div class="grid sm:grid-cols-2 gap-4 mb-8">
+                    <div class="flex items-start gap-3 bg-white rounded-xl p-4 shadow-sm border border-parchment">
+                        <div class="w-8 h-8 bg-mist rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
+                            <svg class="w-4 h-4 text-fern" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+                        </div>
+                        <div>
+                            <div class="font-semibold text-forest text-sm mb-1">Bilimsel Yaklaşım</div>
+                            <div class="text-fern/60 text-xs">Kanıta dayalı ıslah metodolojileri</div>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-3 bg-white rounded-xl p-4 shadow-sm border border-parchment">
+                        <div class="w-8 h-8 bg-mist rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
+                            <svg class="w-4 h-4 text-fern" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4"/></svg>
+                        </div>
+                        <div>
+                            <div class="font-semibold text-forest text-sm mb-1">Veri Odaklılık</div>
+                            <div class="text-fern/60 text-xs">Her karar verinin desteğiyle alınır</div>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-3 bg-white rounded-xl p-4 shadow-sm border border-parchment">
+                        <div class="w-8 h-8 bg-mist rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
+                            <svg class="w-4 h-4 text-fern" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                        </div>
+                        <div>
+                            <div class="font-semibold text-forest text-sm mb-1">Güçlü Ortaklıklar</div>
+                            <div class="text-fern/60 text-xs">Sektör ve akademiyle köprüler</div>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-3 bg-white rounded-xl p-4 shadow-sm border border-parchment">
+                        <div class="w-8 h-8 bg-mist rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
+                            <svg class="w-4 h-4 text-fern" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064"/></svg>
+                        </div>
+                        <div>
+                            <div class="font-semibold text-forest text-sm mb-1">Geniş Adaptasyon</div>
+                            <div class="text-fern/60 text-xs">Farklı iklim ve bölgelere uyum</div>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="#contact" class="inline-flex items-center gap-2 bg-forest hover:bg-fern text-white font-semibold px-7 py-3.5 rounded-full transition-all duration-200 shadow-lg hover:shadow-xl hover:-translate-y-0.5">
+                    Bizimle Çalışın
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     CONTACT
+════════════════════════════════════════ -->
+<section id="contact" class="py-24 bg-white relative overflow-hidden">
+
+    <div class="absolute inset-0 pointer-events-none">
+        <div class="absolute bottom-0 right-0 w-80 h-80 rounded-full bg-mist/40"></div>
+        <div class="absolute top-20 left-0 w-60 h-60 rounded-full bg-parchment/60"></div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+
+        <div class="text-center mb-16 reveal">
+            <span class="inline-block bg-mist text-fern text-xs font-bold tracking-widest uppercase px-4 py-1.5 rounded-full mb-4">İletişim</span>
+            <h2 class="font-display text-3xl sm:text-4xl font-bold text-forest mb-4">Projenizi Konuşalım</h2>
+            <p class="text-fern/70 text-lg max-w-2xl mx-auto">Islah programı, tohum üretimi, veri analizi veya yazılım konularında yardıma mı ihtiyacınız var? Hemen yazın.</p>
+        </div>
+
+        <div class="grid lg:grid-cols-2 gap-10">
+
+            <!-- Form -->
+            <div class="reveal bg-cream rounded-3xl p-8 border border-parchment shadow-sm">
+                <form id="contact-form" novalidate>
+                    <div class="grid sm:grid-cols-2 gap-5 mb-5">
+                        <div>
+                            <label class="block text-xs font-semibold text-fern mb-1.5 tracking-wide uppercase" for="name">Adınız Soyadınız *</label>
+                            <input id="name" type="text" placeholder="Örn: Ahmet Yılmaz"
+                                   class="form-input w-full bg-white border border-parchment rounded-xl px-4 py-3 text-sm text-forest placeholder-fern/30 transition-all"/>
+                            <p class="error-msg text-red-500 text-xs mt-1 hidden">Ad Soyad zorunludur.</p>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-fern mb-1.5 tracking-wide uppercase" for="company">Firma / Kurum</label>
+                            <input id="company" type="text" placeholder="Firma adı (isteğe bağlı)"
+                                   class="form-input w-full bg-white border border-parchment rounded-xl px-4 py-3 text-sm text-forest placeholder-fern/30 transition-all"/>
+                        </div>
+                    </div>
+                    <div class="grid sm:grid-cols-2 gap-5 mb-5">
+                        <div>
+                            <label class="block text-xs font-semibold text-fern mb-1.5 tracking-wide uppercase" for="email">E-posta Adresi *</label>
+                            <input id="email" type="email" placeholder="ornek@firma.com"
+                                   class="form-input w-full bg-white border border-parchment rounded-xl px-4 py-3 text-sm text-forest placeholder-fern/30 transition-all"/>
+                            <p class="error-msg text-red-500 text-xs mt-1 hidden">Geçerli e-posta giriniz.</p>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-fern mb-1.5 tracking-wide uppercase" for="phone">Telefon</label>
+                            <input id="phone" type="tel" placeholder="+90 5XX XXX XX XX"
+                                   class="form-input w-full bg-white border border-parchment rounded-xl px-4 py-3 text-sm text-forest placeholder-fern/30 transition-all"/>
+                        </div>
+                    </div>
+                    <div class="mb-5">
+                        <label class="block text-xs font-semibold text-fern mb-1.5 tracking-wide uppercase" for="subject">Konu *</label>
+                        <select id="subject"
+                                class="form-input w-full bg-white border border-parchment rounded-xl px-4 py-3 text-sm text-forest transition-all appearance-none cursor-pointer">
+                            <option value="">— Hizmet seçin —</option>
+                            <option>Bitki Islahı Danışmanlığı</option>
+                            <option>Tohum Üretimi</option>
+                            <option>Deneme Takip</option>
+                            <option>Veri Analizi & Görselleştirme</option>
+                            <option>Yazılım Çözümleri</option>
+                            <option>Diğer</option>
+                        </select>
+                        <p class="error-msg text-red-500 text-xs mt-1 hidden">Lütfen bir konu seçin.</p>
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-xs font-semibold text-fern mb-1.5 tracking-wide uppercase" for="message">Mesajınız *</label>
+                        <textarea id="message" rows="5" placeholder="Projeniz veya sorunuz hakkında kısa bir açıklama yapın..."
+                                  class="form-input w-full bg-white border border-parchment rounded-xl px-4 py-3 text-sm text-forest placeholder-fern/30 transition-all resize-none"></textarea>
+                        <p class="error-msg text-red-500 text-xs mt-1 hidden">Mesaj alanı zorunludur.</p>
+                    </div>
+
+                    <!-- Success / Error messages -->
+                    <div id="form-success" class="hidden mb-4 bg-mist border border-sage/40 text-fern rounded-xl px-4 py-3 text-sm font-medium flex items-center gap-2">
+                        <svg class="w-5 h-5 text-sage" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        Mesajınız alındı! En kısa sürede dönüş yapacağız.
+                    </div>
+
+                    <button type="submit" id="submit-btn"
+                            class="w-full bg-forest hover:bg-fern text-white font-bold py-4 px-8 rounded-xl transition-all duration-200 flex items-center justify-center gap-2 shadow-lg hover:shadow-xl hover:-translate-y-0.5 group">
+                        <span id="btn-text">Mesajı Gönder</span>
+                        <svg id="btn-icon" class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
+                        <svg id="btn-spin" class="w-5 h-5 hidden animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/></svg>
+                    </button>
+                </form>
+            </div>
+
+            <!-- Map + Info -->
+            <div class="reveal space-y-6" style="transition-delay:.1s">
+
+                <!-- Map placeholder -->
+                <div class="rounded-3xl overflow-hidden border border-parchment shadow-sm h-64 bg-gradient-to-br from-mist to-parchment relative flex items-center justify-center">
+                    <div class="text-center">
+                        <svg class="w-16 h-16 text-sage/50 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                        <p class="text-fern/60 text-sm font-medium">Türkiye</p>
+                        <p class="text-fern/40 text-xs mt-1">Harita entegrasyonu için lütfen iletişime geçin</p>
+                    </div>
+                    <!-- Decorative grid lines -->
+                    <div class="absolute inset-0 opacity-20">
+                        <svg viewBox="0 0 300 240" class="w-full h-full">
+                            <defs><pattern id="map-grid" width="30" height="30" patternUnits="userSpaceOnUse"><path d="M30 0L0 0 0 30" fill="none" stroke="#2D6A4F" stroke-width=".5"/></pattern></defs>
+                            <rect width="300" height="240" fill="url(#map-grid)"/>
+                            <!-- Fake roads -->
+                            <path d="M0 120 Q150 80 300 120" stroke="#2D6A4F" stroke-width="1" fill="none" opacity=".4"/>
+                            <path d="M150 0 Q130 120 150 240" stroke="#2D6A4F" stroke-width="1" fill="none" opacity=".4"/>
+                            <!-- Location pin -->
+                            <circle cx="150" cy="120" r="6" fill="#C9A84C"/>
+                            <circle cx="150" cy="120" r="12" stroke="#C9A84C" stroke-width="1.5" fill="none" opacity=".5"/>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Contact info cards -->
+                <div class="grid sm:grid-cols-2 gap-4">
+                    <div class="bg-cream rounded-2xl p-5 border border-parchment flex items-start gap-3">
+                        <div class="w-10 h-10 bg-fern rounded-lg flex items-center justify-center flex-shrink-0">
+                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                        </div>
+                        <div>
+                            <div class="text-xs font-bold text-fern uppercase tracking-wide mb-1">E-posta</div>
+                            <a href="mailto:info@gznagri.com" class="text-forest text-sm font-medium hover:text-sage transition-colors">info@gznagri.com</a>
+                        </div>
+                    </div>
+                    <div class="bg-cream rounded-2xl p-5 border border-parchment flex items-start gap-3">
+                        <div class="w-10 h-10 bg-fern rounded-lg flex items-center justify-center flex-shrink-0">
+                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                        </div>
+                        <div>
+                            <div class="text-xs font-bold text-fern uppercase tracking-wide mb-1">Telefon</div>
+                            <a href="tel:+905xxxxxxxxx" class="text-forest text-sm font-medium hover:text-sage transition-colors">+90 5XX XXX XX XX</a>
+                        </div>
+                    </div>
+                    <div class="bg-cream rounded-2xl p-5 border border-parchment flex items-start gap-3">
+                        <div class="w-10 h-10 bg-gold rounded-lg flex items-center justify-center flex-shrink-0">
+                            <!-- LinkedIn -->
+                            <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                        </div>
+                        <div>
+                            <div class="text-xs font-bold text-fern uppercase tracking-wide mb-1">LinkedIn</div>
+                            <span class="text-forest text-sm font-medium">GznAgri Consulting</span>
+                        </div>
+                    </div>
+                    <div class="bg-cream rounded-2xl p-5 border border-parchment flex items-start gap-3">
+                        <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                            <!-- Facebook -->
+                            <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                        </div>
+                        <div>
+                            <div class="text-xs font-bold text-fern uppercase tracking-wide mb-1">Facebook</div>
+                            <span class="text-forest text-sm font-medium">GznAgri & Data</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════ -->
+<footer class="bg-forest text-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <!-- Top footer -->
+        <div class="py-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 border-b border-white/10">
+
+            <!-- Brand -->
+            <div class="lg:col-span-2">
+                <div class="flex items-center gap-3 mb-4">
+                    <svg viewBox="0 0 44 44" fill="none" class="w-10 h-10">
+                        <circle cx="22" cy="22" r="21" fill="#2D6A4F" stroke="#C9A84C" stroke-width="1.5"/>
+                        <path d="M22 34 C22 34 22 18 22 14 C22 10 18 7 14 8 C14 8 14 18 22 22" fill="#74C69D" opacity=".9"/>
+                        <path d="M22 34 C22 34 22 18 22 14 C22 10 26 7 30 8 C30 8 30 18 22 22" fill="#B7E4C7" opacity=".8"/>
+                        <line x1="22" y1="14" x2="22" y2="35" stroke="#1B4332" stroke-width="1.2" stroke-linecap="round"/>
+                        <text x="14" y="41" font-family="Inter" font-weight="700" font-size="7" fill="#C9A84C" letter-spacing=".5">G</text>
+                        <text x="19" y="41" font-family="Inter" font-weight="300" font-size="5.5" fill="#74C69D" letter-spacing=".3">Agri</text>
+                    </svg>
+                    <div>
+                        <div class="font-bold text-white">GznAgri & Data Consulting</div>
+                        <div class="text-mint/60 text-xs">Sebze Islahı & Tohumculuk Ar-Ge</div>
+                    </div>
+                </div>
+                <p class="text-white/60 text-sm leading-relaxed max-w-sm">
+                    Örtüaltı sebze ıslahı, tohumculuk Ar-Ge'si ve tarımsal veri analitiği alanında bağımsız bilimsel danışmanlık. Her tohumda bir algoritma saklıdır.
+                </p>
+            </div>
+
+            <!-- Links -->
+            <div>
+                <h4 class="font-semibold text-white mb-4 text-sm uppercase tracking-wide">Hızlı Bağlantılar</h4>
+                <ul class="space-y-2">
+                    <li><a href="#home"     class="text-white/60 hover:text-mint text-sm transition-colors">Ana Sayfa</a></li>
+                    <li><a href="#products" class="text-white/60 hover:text-mint text-sm transition-colors">Ürünler</a></li>
+                    <li><a href="#services" class="text-white/60 hover:text-mint text-sm transition-colors">Hizmetler</a></li>
+                    <li><a href="#about"    class="text-white/60 hover:text-mint text-sm transition-colors">Hakkımızda</a></li>
+                    <li><a href="#contact"  class="text-white/60 hover:text-mint text-sm transition-colors">İletişim</a></li>
+                </ul>
+            </div>
+
+            <!-- Services -->
+            <div>
+                <h4 class="font-semibold text-white mb-4 text-sm uppercase tracking-wide">Hizmetler</h4>
+                <ul class="space-y-2">
+                    <li><span class="text-white/60 text-sm">Bitki Islahı</span></li>
+                    <li><span class="text-white/60 text-sm">Tohum Üretimi</span></li>
+                    <li><span class="text-white/60 text-sm">Deneme Takip</span></li>
+                    <li><span class="text-white/60 text-sm">Veri Analizi</span></li>
+                    <li><span class="text-white/60 text-sm">Yazılım</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Bottom footer -->
+        <div class="py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p class="text-white/40 text-xs">© 2026 GznAgri & Data Consulting. Tüm hakları saklıdır.</p>
+            <p class="text-white/30 text-xs">Tasarım & Geliştirme — <span class="text-mint/50">gznagri.com</span></p>
+        </div>
+    </div>
+</footer>
+
+
+<!-- ════════════════════════════════════════
+     JAVASCRIPT
+════════════════════════════════════════ -->
+<script>
+// ── Mobile menu toggle ──
+const menuBtn   = document.getElementById('menu-btn');
+const mobileMenu= document.getElementById('mobile-menu');
+const iconOpen  = document.getElementById('icon-open');
+const iconClose = document.getElementById('icon-close');
+
+menuBtn.addEventListener('click', () => {
+    const open = mobileMenu.classList.toggle('open');
+    iconOpen.classList.toggle('hidden', open);
+    iconClose.classList.toggle('hidden', !open);
+});
+
+// Close mobile menu on link click
+document.querySelectorAll('#mobile-menu a').forEach(a => {
+    a.addEventListener('click', () => {
+        mobileMenu.classList.remove('open');
+        iconOpen.classList.remove('hidden');
+        iconClose.classList.add('hidden');
+    });
+});
+
+// ── Scroll-reveal ──
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+}, { threshold: 0.12 });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// ── Active nav on scroll ──
+const sections = document.querySelectorAll('section[id]');
+const navLinks  = document.querySelectorAll('.nav-link');
+
+window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+        if (window.scrollY >= s.offsetTop - 100) current = s.id;
+    });
+    navLinks.forEach(a => {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+    });
+}, { passive: true });
+
+// ── Product filter ──
+function filterProducts(cat) {
+    document.querySelectorAll('.product-tab').forEach(t => t.classList.remove('active-tab'));
+    event.target.classList.add('active-tab');
+
+    document.querySelectorAll('.product-card').forEach(card => {
+        const match = cat === 'all' || card.dataset.cat === cat;
+        card.style.display = match ? '' : 'none';
+    });
+}
+
+// ── Contact form ──
+const form      = document.getElementById('contact-form');
+const successEl = document.getElementById('form-success');
+const btnText   = document.getElementById('btn-text');
+const btnIcon   = document.getElementById('btn-icon');
+const btnSpin   = document.getElementById('btn-spin');
+const submitBtn = document.getElementById('submit-btn');
+
+function validateField(id, validFn) {
+    const el  = document.getElementById(id);
+    const err = el.parentElement.querySelector('.error-msg');
+    const ok  = validFn(el.value.trim());
+    el.classList.toggle('border-red-400', !ok);
+    el.classList.toggle('border-parchment', ok);
+    if (err) err.classList.toggle('hidden', ok);
+    return ok;
+}
+
+form.addEventListener('submit', e => {
+    e.preventDefault();
+
+    const v1 = validateField('name',    v => v.length >= 2);
+    const v2 = validateField('email',   v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v));
+    const v3 = validateField('subject', v => v !== '');
+    const v4 = validateField('message', v => v.length >= 10);
+
+    if (!(v1 && v2 && v3 && v4)) return;
+
+    // Simulate send
+    submitBtn.disabled = true;
+    btnText.textContent = 'Gönderiliyor...';
+    btnIcon.classList.add('hidden');
+    btnSpin.classList.remove('hidden');
+
+    setTimeout(() => {
+        submitBtn.disabled = false;
+        btnText.textContent = 'Mesajı Gönder';
+        btnIcon.classList.remove('hidden');
+        btnSpin.classList.add('hidden');
+        successEl.classList.remove('hidden');
+        form.reset();
+        setTimeout(() => successEl.classList.add('hidden'), 5000);
+    }, 1600);
+});
+
+// Live validation
+['name','email','subject','message'].forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.addEventListener('blur', () => {
+        if (id === 'name')    validateField('name',    v => v.length >= 2);
+        if (id === 'email')   validateField('email',   v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v));
+        if (id === 'subject') validateField('subject', v => v !== '');
+        if (id === 'message') validateField('message', v => v.length >= 10);
+    });
+});
+</script>
+
+</body>
+</html>
